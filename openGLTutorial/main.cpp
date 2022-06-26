@@ -41,7 +41,7 @@ int main() {
 
     // build and compile our shader program
     // ------------------------------------
-    Shader ourShader("VertexShader.vs", "FragmentShader.fs"); // you can name your shader files however you like
+    Shader defaultShader("VertexShader.vs", "FragmentShader.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -105,11 +105,6 @@ int main() {
     }
     stbi_image_free(data);
 
-    ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
-// either set it manually like so:
-    ourShader.setInt("texture", 0);
-
-
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window)) {
@@ -123,11 +118,10 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // bind textures on corresponding texture units
-        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
 
         // render container
-        ourShader.use();
+        defaultShader.use();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
